@@ -1,9 +1,8 @@
-FROM ubuntu:20.04
+FROM tomcat:latest
 RUN apt-get update
-RUN apt-get install default-jdk tomcat9 maven git tomcat9 -y
-RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-RUN cd boxfuse-sample-java-war-hello
-RUN mvn package
+RUN apt-get install maven git -y
+RUN mkdir /repo && cd /repo && git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+RUN cd /repo/boxfuse-sample-java-war-hello && mvn package
 EXPOSE 8080
-RUN cp /home/ubuntu/boxfuse-sample-java-war-hello/target/hello-1.0.war /var/lib/tomcat9/webapps/
-CMD ["tomcat9", "-g", "daemon off;"]
+RUN cp /repo/boxfuse-sample-java-war-hello/target/hello-1.0.war /var/lib/tomcat9/webapps/
+CMD ["catalina.sh", "run"]
