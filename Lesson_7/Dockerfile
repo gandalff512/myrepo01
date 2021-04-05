@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:14.04
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-all python-pip
 ADD requirements.txt /tmp/
