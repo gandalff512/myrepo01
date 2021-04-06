@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install maven git wget  -y
+RUN apt-get update && apt-get install maven -y && apt-get install git -y && apt-get install wget  -y
 RUN mkdir -p /usr/local/tomcat && wget https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.44/bin/apache-tomcat-9.0.44.tar.gz -O /tmp/tomcat.tar.gz
 
 WORKDIR /tmp
