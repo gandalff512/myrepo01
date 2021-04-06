@@ -5,13 +5,13 @@ RUN mkdir -p /usr/local/tomcat && wget https://mirrors.estointernet.in/apache/to
 
 WORKDIR /tmp
 RUN tar xvfz tomcat.tar.gz
-RUN cp apache-tomcat-9.0.44/* /usr/local/tomcat/
+RUN cp -Rv apache-tomcat-9.0.44/* /usr/local/tomcat/
 RUN mkdir /box
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git /box
 
 WORKDIR /box
 RUN mvn package
-RUN cp /boxfuse/target/hello-1.0.war /usr/local/tomcat/webapps/
+RUN cp /box/target/hello-1.0.war /usr/local/tomcat/webapps/
 
 EXPOSE 8080
 CMD /usr/local/tomcat/bin/catalina.sh run
