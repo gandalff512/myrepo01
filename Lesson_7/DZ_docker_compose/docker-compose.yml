@@ -1,4 +1,23 @@
-  Version: '2'
+  Version: '3'
   services:
-    sbor:
-      image:
+    maven:
+      build: sbor_dockerfile
+    volumes:
+      - type: volume
+        source: mymavenbox
+        target: /mymavenbox
+
+    tomcat:
+      build: prod_dockerfile
+    volumes:
+      - type: volume
+        source: mytomcat
+        target: /usr/local/tomcat
+    ports:
+      - "8080:8080"
+
+
+  volumes:
+    mymavenbox:
+    mytomcat:
+
