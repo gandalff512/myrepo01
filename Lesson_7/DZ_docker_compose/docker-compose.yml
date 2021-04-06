@@ -1,1 +1,4 @@
-87
+  Version: '2'
+  services:
+    sbor:
+      image:
