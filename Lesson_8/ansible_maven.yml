@@ -27,6 +27,7 @@
     fetch:
       src: /home/ubuntu/box/target/hello-1.0.war
       dest: /tmp/fetched/hello-1.0.war
+      flat: yes
 
 - name: Prod Tomcat
   hosts: prod
@@ -42,4 +43,4 @@
   - name: Copy .war prod machine
     copy:
      src: /tmp/fetched/hello-1.0.war
-     dest: /usr/local/tomcat/webapps/
+     dest: /var/lib/tomcat9/webapps/hello-1.0.war
