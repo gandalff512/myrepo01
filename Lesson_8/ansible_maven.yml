@@ -39,7 +39,7 @@
      state: present
      update_cache: yes
 
-  - name: Ensure index.html is present
+  - name: Copy .war prod machine
     copy:
      src: /tmp/fetched/hello-1.0.war
      dest: /usr/local/tomcat/webapps/
