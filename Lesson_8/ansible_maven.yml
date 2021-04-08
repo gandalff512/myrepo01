@@ -37,6 +37,7 @@
     apt:
      name: tomcat9
      state: present
+     update_cache: yes
 
   - name: Ensure index.html is present
     copy:
