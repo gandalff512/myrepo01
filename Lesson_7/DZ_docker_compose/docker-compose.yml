@@ -1,23 +1,24 @@
   Version: '3'
   services:
-    maven:
-      build: sbor_dockerfile
+    build:
+      build: ./build
     volumes:
       - type: volume
         source: mymavenbox
-        target: /mymavenbox
+        target: /maven_box/boxfuse-sample-java-war-hello/webapps/
 
     tomcat:
-      build: prod_dockerfile
+      build: ./prod
     volumes:
       - type: volume
-        source: mytomcat
-        target: /usr/local/tomcat
+        source: mymavenbox
+        target: /maven_box/boxfuse-sample-java-war-hello/build
+    depends_on:
+      - build
     ports:
       - "8080:8080"
 
 
   volumes:
     mymavenbox:
-    mytomcat:
 
