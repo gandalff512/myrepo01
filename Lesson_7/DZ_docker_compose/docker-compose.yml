@@ -2,21 +2,21 @@
   services:
     build:
       build: ./build
-    volumes:
-      - type: volume
-        source: share
-        target: /usr/local/webapps/
+      volumes:
+        - type: volume
+          source: share
+          target: /usr/local/webapps
 
     tomcat:
       build: ./prod
-    volumes:
-      - type: volume
-        source: share
-        target: /usr/local/build
-    depends_on:
-      - build
-    ports:
-      - "8080:8080"
+      volumes:
+         - type: volume
+           source: share
+           target: /usr/local/build
+      depends_on:
+         - build
+      ports:
+         - "8080:8080"
 
   volumes:
     share:
