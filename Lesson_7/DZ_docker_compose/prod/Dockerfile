@@ -2,11 +2,11 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR /usr/local/tomcat
 
-RUN wget https://mirrors.nav.ro/apache/tomcat/tomcat-8/v8.5.64/bin/apache-tomcat-8.5.64.tar.gz -O /tmp/tomcat.tar.gz
+RUN wget https://mirrors.nav.ro/apache/tomcat/tomcat-8/v8.5.65/bin/apache-tomcat-8.5.65.tar.gz -O /tmp/apache-tomcat-8.5.65.tar.gz
 
 WORKDIR /tmp
-RUN tar xvfz tomcat.tar.gz
-RUN cp -Rv apache-tomcat-8.5.64/* /usr/local/tomcat/
+RUN tar xvfz apache-tomcat-8.5.65.tar.gz
+RUN cp -Rv apache-tomcat-8.5.65/* /usr/local/tomcat/
 
 EXPOSE 8080
 
