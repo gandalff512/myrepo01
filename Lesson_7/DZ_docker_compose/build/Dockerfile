@@ -1,6 +1,6 @@
-FROM maven:3.8.1-openjdk
+FROM ubuntu:latest
 
-RUN apt-get update && apt-get install git -y
+RUN apt-get update && apt-get install maven -y && apt-get install git -y
 
 WORKDIR /usr/local/
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
