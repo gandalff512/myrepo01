@@ -1,4 +1,4 @@
-  Version: '3'
+  version: "3"
   services:
     build:
       build: ./build
@@ -7,7 +7,7 @@
           source: share
           target: /usr/local/webapps
 
-    tomcat:
+    prod:
       build: ./prod
       volumes:
          - type: volume
@@ -19,5 +19,5 @@
          - "8080:8080"
 
   volumes:
-    share:
+     share:
 
