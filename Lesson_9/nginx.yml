@@ -1,0 +1,17 @@
+---
+- name: Nginx
+  hosts: prod
+  become: yes
+
+  tasks:
+  - name: Ensure package is present
+    apt:
+     pkg:
+       - nginx
+     state: present
+     update_cache: yes
+
+  - lineinfile:
+      path: /var/html/www/index
+      regexp: '<h1><p><script> document.write(new Date().toLocaleDateString()); </script></p></h1>'
+      line: 'SELINUX=enforcing'
