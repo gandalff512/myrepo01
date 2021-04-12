@@ -4,14 +4,14 @@
       build: ./build
       volumes:
         - type: volume
-          source: /home/ubuntu/
+          source: share
           target: /usr/local/build
 
     prod:
       build: ./prod
       volumes:
          - type: volume
-           source: /home/ubuntu/
+           source: share
            target: /usr/local/tomcat/webapps
       depends_on:
          - build
@@ -19,5 +19,5 @@
          - "8080:8080"
 
   volumes:
-     /home/ubuntu/:
+     share:
 
