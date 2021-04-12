@@ -12,7 +12,7 @@
       volumes:
          - type: volume
            source: share
-           target: /usr/local/build
+           target: /usr/local/webapps
       depends_on:
          - build
       ports:
