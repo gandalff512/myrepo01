@@ -4,20 +4,20 @@
       build: ./build
       volumes:
         - type: volume
-          source: share
+          source: docker_share
           target: /usr/local/webapps
 
     prod:
       build: ./prod
       volumes:
          - type: volume
-           source: share
-           target: /usr/local/webapps
+           source: docker_share
+           target: /usr/local/build
       depends_on:
          - build
       ports:
          - "8080:8080"
 
   volumes:
-     share:
+     docker_share:
 
