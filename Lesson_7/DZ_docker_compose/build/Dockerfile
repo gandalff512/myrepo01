@@ -9,5 +9,4 @@ RUN mvn package
 
 WORKDIR /usr/local/webapps/
 RUN cp /usr/local/boxfuse-sample-java-war-hello/target/hello-1.0.war .
-RUN tail -f /dev/null
 
