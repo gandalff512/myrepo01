@@ -4,20 +4,20 @@
       build: ./build
       volumes:
         - type: volume
-          source: docker_share
-          target: /usr/local/webapps
+          source: /home/ubuntu/
+          target: /usr/local/build
 
     prod:
       build: ./prod
       volumes:
          - type: volume
-           source: docker_share
-           target: /usr/local/build
+           source: /home/ubuntu/
+           target: /usr/local/tomcat/webapps
       depends_on:
          - build
       ports:
          - "8080:8080"
 
   volumes:
-     docker_share:
+     /home/ubuntu/:
 
