@@ -10,5 +10,5 @@ RUN cp -Rv apache-tomcat-8.5.65/* /usr/local/tomcat/
 
 EXPOSE 8080
 
-CMD cp -r /usr/local/webapps/hello-1.0.war /usr/local/tomcat/webapps/hello-1.0.war
+CMD cp -r /usr/local/build/hello-1.0.war /usr/local/tomcat/webapps/hello-1.0.war
 CMD /usr/local/tomcat/bin/catalina.sh run
