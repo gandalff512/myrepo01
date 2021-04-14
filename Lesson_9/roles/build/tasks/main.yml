@@ -1,2 +1,27 @@
 ---
-# tasks file for build
+  tasks:
+  - name: Ensure package is present
+    apt:
+     pkg:
+       - maven
+       - git
+       - wget
+     state: present
+     update_cache: yes
+
+  - name: Git clone boxfuse
+    git:
+     repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+     dest: /home/ubuntu/box
+     clone: yes
+
+  - name: Maven package
+    shell:
+      cmd: mvn package -f /home/ubuntu/box/pom.xml
+
+  - name: Copy .war local machine
+    fetch:
+      src: /home/ubuntu/box/target/hello-1.0.war
+      dest: /tmp/fetched/hello-1.0.war
+      flat: yes
+
