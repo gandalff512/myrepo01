@@ -22,6 +22,6 @@
   - name: Copy .war local machine
     fetch:
       src: /home/ubuntu/box/target/hello-1.0.war
-      dest: /tmp/fetched/hello-1.0.war
+      dest: ./build/files/hello-1.0.war
       flat: yes
 

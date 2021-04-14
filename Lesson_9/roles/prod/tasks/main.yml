@@ -7,5 +7,5 @@
 
   - name: Copy .war prod machine
     copy:
-     src: /tmp/fetched/hello-1.0.war
+     src: ./build/files/hello-1.0.war
      dest: /var/lib/tomcat9/webapps/hello-1.0.war
