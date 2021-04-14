@@ -1,11 +1,11 @@
-  tasks:
-  - name: Ensure tomcat is present
-    apt:
-     name: tomcat9
-     state: present
-     update_cache: yes
+---
+- name: Ensure tomcat is present
+  apt:
+    name: tomcat9
+    state: present
+    update_cache: yes
 
-  - name: Copy .war prod machine
-    copy:
-     src: ./build/files/hello-1.0.war
-     dest: /var/lib/tomcat9/webapps/hello-1.0.war
+- name: Copy .war prod machine
+  copy:
+    src: ./build/files/hello-1.0.war
+    dest: /var/lib/tomcat9/webapps/hello-1.0.war
