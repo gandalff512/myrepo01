@@ -1,27 +1,27 @@
 ---
+# task build
 
 - name: Ensure package is present
   apt:
-    pkg:
-      - maven
-      - git
-      - wget
+    name: "{{ item }}"
     state: present
     update_cache: yes
+  with_items: "{{ packages }}"
 
 - name: Git clone boxfuse
   git:
-    repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
-    dest: /home/ubuntu/box
+    repo: "{{ boxgit }}"
+    dest: "{{ boxdir }}"
+    version: master
     clone: yes
 
 - name: Maven package
   shell:
-    cmd: mvn package -f /home/ubuntu/box/pom.xml
+    cmd: mvn package -f /"{{ boxdir }}"/pom.xml
 
 - name: Copy .war local machine
   fetch:
-      src: /home/ubuntu/box/target/hello-1.0.war
+      src: /"{{ boxdir }}"/target/hello-1.0.war
       dest: ./build/files/hello-1.0.war
       flat: yes
 
