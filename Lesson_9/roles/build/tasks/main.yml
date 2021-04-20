@@ -21,7 +21,7 @@
 
 - name: Copy .war local machine
   fetch:
-      src: /"{{ boxdir }}"/target/hello-1.0.war
+      src: /{{ boxdir }}/target/hello-1.0.war
       dest: ./build/files/hello-1.0.war
       flat: yes
 

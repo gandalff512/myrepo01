@@ -2,7 +2,7 @@
 # vars file for build
 
 boxgit: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-boxdir: /home/ubuntu/box
+boxdir: home/ubuntu/box
 
 packages: [ 'wget' , 'maven' , 'git' ]
 
