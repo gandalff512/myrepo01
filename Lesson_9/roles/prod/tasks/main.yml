@@ -1,10 +1,9 @@
 ---
 - name: Ensure tomcat is present
   apt:
-    name: "{{ item }}"
+    name: tomcat9
     state: present
     update_cache: yes
-  with_items: "{{ packages }}"
 
 - name: Copy .war prod machine
   copy:

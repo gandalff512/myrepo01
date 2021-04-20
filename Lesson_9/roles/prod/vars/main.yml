@@ -1,6 +1,5 @@
 ---
 # vars file for prod
 
-packages: [ 'tomcat9' ]
 
 tomcatdir: /var/lib/tomcat9/webapps/
