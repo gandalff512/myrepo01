@@ -22,14 +22,14 @@ pipeline {
   }
       stage ('make docker') {
           steps {
-              sh 'docker build -t boxfuse02 .'
-              sh 'docker tag boxfuse02 178.154.206.16:8123/repository/dockerrepo//boxfuse02:latest'
-              sh 'docker push 178.154.206.16:8123/repository/dockerrepo//boxfuse02:latest'
+              sh 'docker build -t prodimage .'
+              sh 'docker tag prodimage 178.154.206.16:8123/repository/dockerrepo/prodimage:latest'
+              sh 'docker push 178.154.206.16:8123/repository/dockerrepo/prodimage:latest'
 
 
       stage ('deploy') {
           steps {
-              deploy adapters: [tomcat9(credentialsId: 'dc5b66a3-ef96-46ae-9e80-9c67fd482938', path: '', url: 'http://84.201.134.71:8080/')], contextPath: 'boxfuseweb1', war: '**/*.war'
+              sh 'docker run -d  -p 8080:8080 178.154.206.16:8123/repository/dockerrepo/prodimage:latest'
           }
       }
   }
