@@ -1,7 +1,13 @@
 pipeline {
-  agent any
+  agent {
 
-
+    docker {
+            image '178.154.206.16:8123/repository/dockerrepo/boxfuse01:latest'
+            registryUrl 'http://178.154.206.16:8081/repository/dockerrepo/'
+            registryCredentialsId '83fbad73-ab62-41a8-aa4b-090549afe37e'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+  }
 
   stages {
       stage ('git') {
@@ -14,6 +20,13 @@ pipeline {
              sh 'mvn package'
           }
   }
+      stage ('make docker') {
+          steps {
+              sh 'docker build -t boxfuse02 .'
+              sh 'docker tag boxfuse02 178.154.206.16:8123/repository/dockerrepo//boxfuse02:latest'
+              sh 'docker push 178.154.206.16:8123/repository/dockerrepo//boxfuse02:latest'
+
+
       stage ('deploy') {
           steps {
               deploy adapters: [tomcat9(credentialsId: 'dc5b66a3-ef96-46ae-9e80-9c67fd482938', path: '', url: 'http://84.201.134.71:8080/')], contextPath: 'boxfuseweb1', war: '**/*.war'
