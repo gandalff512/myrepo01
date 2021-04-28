@@ -1,0 +1,23 @@
+pipeline {
+  agent any
+
+
+
+  stages {
+      stage ('git') {
+         steps {
+          git 'https://github.com/gandalff512/box_fuse_test01.git'
+      }
+  }
+      stage ('build') {
+          steps {
+             sh 'mvn package'
+          }
+  }
+      stage ('deploy') {
+          steps {
+              deploy adapters: [tomcat9(credentialsId: 'dc5b66a3-ef96-46ae-9e80-9c67fd482938', path: '', url: 'http://84.201.134.71:8080/')], contextPath: 'boxfuseweb1', war: '**/*.war'
+          }
+      }
+  }
+  }
