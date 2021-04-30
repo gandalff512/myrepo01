@@ -1,34 +1,64 @@
-  pipeline {
-      agent {
+pipeline {
 
-          docker {
-              image '178.154.206.16:8123/boxfuse01:latest'
-              args '--privileged -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
-          }
-      }
+    agent none
 
-      stages {
-           stage ('git') {
-               steps {
-                   git 'https://github.com/gandalff512/box_fuse_test01.git'
-               }
-           }
+    stages {
+
+        stage('container') {
+
+            agent {
+                docker {
+                    image '178.154.205.66:8123/boxfuse01:latest'
+                    args '--privileged -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
+                }
+            }
+
+               stages {
+                    stage ('git') {
+                         steps {
+                          sh 'rm -rf box_fuse_test01 && git clone https://github.com/gandalff512/box_fuse_test01.git'
+                          }
+                    }
+
            stage ('build') {
                steps {
-                 sh 'mvn package'
+                 sh 'mvn package -f ./box_fuse_test01/pom.xml'
                }
            }
+
            stage ('make docker') {
                steps {
-                  sh 'docker build -t prodimage .'
-                  sh 'docker tag prodimage 178.154.206.16:8123/prodimage:latest'
-                  sh 'docker push 178.154.206.16:8123/prodimage:latest'
+						script {
+							def dockerImage = docker.build("178.154.205.66:8123/prod:latest", "-f ./box_fuse_test01/Dockerfile .")
+							docker.withRegistry('http://178.154.205.66:8123', '83fbad73-ab62-41a8-aa4b-090549afe37e') {
+                                dockerImage.push()
+                           }
+						}
                }
            }
-           stage ('deploy') {
-               steps {
-                  sh 'docker run -d  -p 8080:8080 178.154.206.16:8123/prodimage:latest'
-               }
            }
-      }
-  }
+         }
+		stage ('prod'){
+		    agent any
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = 'vm20'
+                    remote.host = '178.154.200.85'
+                    withCredentials([usernamePassword(credentialsId: 'dc5b66a3-ef96-46ae-9e80-9c67fd482938', passwordVariable: 'password', usernameVariable: 'username')]) {
+                        remote.user = "${username}"
+                        remote.password = "${password}"
+                    }
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: "apt update && apt install -y docker.io"
+                    writeFile file: 'dockerdm.sh', text: '{"insecure-registries":["178.154.205.66:8123"]}\n'
+                    sshPut remote: remote, from: 'dockerdm.sh', into: '/etc/docker/daemon.json'
+                    sshCommand remote: remote, command: "systemctl restart docker"
+                    sshCommand remote: remote, command: "docker run -d -p 80:8080 178.154.205.66:8123/prod:latest"
+				        }
+		            }
+
+		}
+	}
+}
+
