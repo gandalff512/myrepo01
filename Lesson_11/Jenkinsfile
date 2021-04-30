@@ -54,7 +54,7 @@ pipeline {
                     writeFile file: 'dockerdm.sh', text: '{"insecure-registries":["178.154.205.66:8123"]}\n'
                     sshPut remote: remote, from: 'dockerdm.sh', into: '/etc/docker/daemon.json'
                     sshCommand remote: remote, command: "systemctl restart docker"
-                    sshCommand remote: remote, command: "docker run -d -p 80:8080 178.154.205.66:8123/prod:latest"
+                    sshCommand remote: remote, command: "docker run -d -p 8080:8080 178.154.205.66:8123/prod:latest"
 				        }
 		            }
 
